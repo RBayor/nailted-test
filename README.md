@@ -2,7 +2,7 @@
 
 To get up and running
 
-    git clone https://github.com/RBayor/nailted-test
+    git clone https://github.com/RBayor/nailted-test.git
     yarn install
     yarn dev
 
