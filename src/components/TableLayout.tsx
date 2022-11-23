@@ -12,17 +12,11 @@ type Props<T> = {
 
 const Pages = [10, 20, 30, 40, 50, 100];
 
-export function TableTemplate<T>({
-  title,
-  tableInstance,
-  rowClassName = "",
-}: Props<T>) {
+export function TableTemplate<T>({ title, tableInstance }: Props<T>) {
   return (
     <>
-      <div className="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
-        <h3 className="p-5 text-left text-2xl  font-bold text-orange-500">
-          {title}
-        </h3>
+      <div className="relative mb-6 flex w-full max-w-7xl flex-col rounded bg-violet-900 text-slate-300 shadow-lg">
+        <h3 className="p-5 text-left text-3xl font-bold text-white">{title}</h3>
         <div className="block w-full overflow-x-auto">
           <table className="w-full border-collapse items-center bg-transparent">
             <thead>
@@ -31,7 +25,7 @@ export function TableTemplate<T>({
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="whitespace-nowrap border border-l-0 border-r-0 border-solid border-slate-100 bg-slate-50 px-6 py-3 text-sm font-bold uppercase text-slate-500"
+                      className="whitespace-nowrap border border-l-0 border-r-0 border-solid border-violet-600  px-6 py-3 text-base font-bold uppercase"
                     >
                       <div
                         {...{
@@ -81,12 +75,11 @@ export function TableTemplate<T>({
                 </tr>
               ))}
             </thead>
-            {/* TODO: */}
             <tbody>
               {tableInstance?.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className={`text-center text-base even:bg-indigo-100 ${rowClassName} `}
+                  className="text-center text-base even:bg-slate-800 "
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td
@@ -114,13 +107,13 @@ export function TableTemplate<T>({
             </span>
           </div>
 
-          <div className="flex-rol flex w-full justify-center gap-3 p-5">
+          <div className="flex-rol flex w-full justify-center gap-3 p-5 text-orange-500">
             <button
               className={clsx(
                 "rounded p-2 text-sm",
                 tableInstance.getCanPreviousPage()
                   ? "bg-green-500 text-white hover:bg-green-700"
-                  : "bg-slate-200 hover:bg-slate-300"
+                  : "bg-slate-200 text-orange-500 hover:bg-slate-300"
               )}
               onClick={() => tableInstance.setPageIndex(0)}
               disabled={!tableInstance.getCanPreviousPage()}
@@ -132,7 +125,7 @@ export function TableTemplate<T>({
                 "rounded p-2 text-sm",
                 tableInstance.getCanPreviousPage()
                   ? "bg-green-500 text-white hover:bg-green-700"
-                  : "bg-slate-200 hover:bg-slate-300"
+                  : "bg-slate-200 text-orange-500 hover:bg-slate-300"
               )}
               onClick={() => tableInstance.previousPage()}
               disabled={!tableInstance.getCanPreviousPage()}
@@ -167,7 +160,7 @@ export function TableTemplate<T>({
             </button>
 
             <select
-              className="rounded"
+              className="rounded "
               value={tableInstance?.getState().pagination.pageSize}
               onChange={(e) => {
                 tableInstance?.setPageSize(Number(e.target.value));

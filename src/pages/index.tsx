@@ -1,12 +1,11 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { EmployeeTable } from "../components/EmployeesTable";
 
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
-  const hello = trpc.employees.allEmployees.useQuery();
-
   return (
     <>
       <Head>
@@ -15,7 +14,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-slate-900">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 "></div>
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+          <EmployeeTable />
+        </div>
       </main>
     </>
   );
