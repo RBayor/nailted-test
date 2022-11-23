@@ -3,10 +3,5 @@
 3,Ron,Plaza,"4738 Woodside Circle",850-868-3521,RonAPlaza@dayrep.com,3/30/1990
 4,Emma,Kwak,"4190 Tully Street",313-651-6614,EmmaAKwak@cuvox.de,3/12/1940
 5,Jimmy,Smith,"3839 Fulton Street",304-405-5250,JimmyTSmith@jourrapide.com,2/25/1953
+5,Roland,Bayor,"12 bungalow",0540935429,rb@gmail/com,12/01/1998
 6,Roland,Bayor,"12 bungalow",0540935429,rb@gmail/com,12/01/1998
-7,Roland,Bayor,"12 bungalow",0540935429,rb@gmail/com,12/01/1998
-8,Roland,Bayor,"12 bungalow",0540935429,rb@gmail/com,12/01/1998
-9,Roland,Bayor,"12 bungalow",0540935429,rb@gmail/com,12/01/1998
-10,Roland,Bayor,"12 bungalow",0540935429,rb@gmail/com,12/01/1998
-11,Roland,Bayor,"12 bungalow",0540935429,rb@gmail/com,12/01/1998
-12,Roland,Bayor,"12 bungalow",0540935429,rb@gmail/com,12/01/1998

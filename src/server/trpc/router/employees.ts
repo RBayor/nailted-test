@@ -49,7 +49,7 @@ export const fetchemployeeRouter = router({
       const nextIndex = jsonData.data.length;
 
       const { name, surname, address, phone, email, birthdate } = input;
-      const csv = `${nextIndex},${name},${surname},"${address}",${phone},${email},${birthdate}\n`;
+      const csv = `\n${nextIndex},${name},${surname},"${address}",${phone},${email},${birthdate}`;
 
       await fs.appendFile(csvDir + "/testfile.txt", csv);
 

@@ -79,7 +79,7 @@ export function TableTemplate<T>({ title, tableInstance }: Props<T>) {
               {tableInstance?.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className="text-center text-base even:bg-slate-800 "
+                  className="text-center text-base odd:bg-purple-800"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td
