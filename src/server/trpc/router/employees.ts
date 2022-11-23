@@ -28,12 +28,7 @@ const headers = "id,name,surname,address,phone,email,birthdate\n";
 
 export const fetchemployeeRouter = router({
   allEmployees: publicProcedure.query(async () => {
-    const csvDir = path.join(process.cwd(), "/public/csv");
-
-    const fileData = await fs.readFile(csvDir + "/employees.txt", "utf8");
-
-    const withHeaders = headers.concat(fileData);
-    const jsonData = Papa.parse<Employee>(withHeaders, { header: true });
+    const jsonData = (await parseEmplooyeeFile()).data;
 
     return {
       employees: jsonData,
@@ -43,14 +38,11 @@ export const fetchemployeeRouter = router({
   addEmployee: publicProcedure
     .input(zEmployee)
     .mutation(async ({ ctx, input }) => {
-      const csvDir = path.join(process.cwd(), "/public/csv");
-      const fileData = await fs.readFile(csvDir + "/testfile.txt", "utf8");
-      const withHeaders = headers.concat(fileData);
+      const { csvDir, data } = await parseEmplooyeeFile();
 
-      const jsonData = Papa.parse<Employee>(withHeaders, { header: true });
-      const nextIndex = Number(jsonData.data.slice(-1)[0]?.id) + 1;
-
+      const nextIndex = Number(data.data.slice(-1)[0]?.id) + 1;
       const { name, surname, address, phone, email, birthdate } = input;
+
       const csv = `\n${nextIndex},${name},${surname},"${address}",${phone},${email},${birthdate}`;
 
       await fs.appendFile(csvDir + "/employees.txt", csv);
@@ -60,3 +52,15 @@ export const fetchemployeeRouter = router({
       };
     }),
 });
+
+const parseEmplooyeeFile = async () => {
+  const csvDir = path.join(process.cwd(), "/public/csv");
+
+  const fileData = await fs.readFile(csvDir + "/employees.txt", "utf8");
+
+  const withHeaders = headers.concat(fileData);
+  return {
+    csvDir,
+    data: Papa.parse<Employee>(withHeaders, { header: true }),
+  };
+};
