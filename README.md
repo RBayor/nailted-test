@@ -2,9 +2,9 @@
 
 To get up and running
 
-    1. clone the repo - git clone https://github.com/RBayor/nailted-test
-    2. install deps - yarn install
-    3. run! - yarn dev
+    git clone https://github.com/RBayor/nailted-test
+    yarn install
+    yarn dev
 
 ## Create T3 App
 
