@@ -44,14 +44,14 @@ export function TableTemplate<T>({ title, tableInstance }: Props<T>) {
                             {{
                               asc: (
                                 <FontAwesomeIcon
-                                  className="text-indigo-500 hover:cursor-pointer hover:text-indigo-700"
+                                  className="text-white hover:cursor-pointer"
                                   icon={faArrowUp}
                                   height={16}
                                 />
                               ),
                               desc: (
                                 <FontAwesomeIcon
-                                  className="text-indigo-500 hover:cursor-pointer hover:text-indigo-700"
+                                  className="text-white hover:cursor-pointer"
                                   icon={faArrowDown}
                                   height={16}
                                 />

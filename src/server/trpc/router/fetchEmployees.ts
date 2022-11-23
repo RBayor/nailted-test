@@ -16,7 +16,7 @@ export type Employee = {
 
 const headers = "id,name,surname,address,phone,email,birthdate\n";
 
-export const employeesRouter = router({
+export const fetchemployeeRouter = router({
   allEmployees: publicProcedure.query(async () => {
     const csvDir = path.join(process.cwd(), "/public/csv");
 

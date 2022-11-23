@@ -1,8 +1,10 @@
 import { router } from "../trpc";
-import { employeesRouter } from "./employees";
+import { addEmployeeRouter } from "./addEmployees";
+import { fetchemployeeRouter } from "./fetchEmployees";
 
 export const appRouter = router({
-  employees: employeesRouter,
+  fetchEmployees: fetchemployeeRouter,
+  addEmployees: addEmployeeRouter,
 });
 
 // export type definition of API
