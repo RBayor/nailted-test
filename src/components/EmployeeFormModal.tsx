@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { toast } from "react-toastify";
 import { trpc } from "../utils/trpc";
 import type { Employee } from "./TableColums";
 import TextInput from "./TextInput";
@@ -13,7 +14,7 @@ export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
   const formRef = React.useRef<HTMLFormElement>(null);
   const utils = trpc.useContext();
   const { mutateAsync, error } = trpc.employees.addEmployee.useMutation({
-    onSettled() {
+    onSuccess() {
       utils.employees.allEmployees.invalidate();
     },
   });
@@ -25,10 +26,12 @@ export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
 
     try {
       await mutateAsync(employeeData);
-
+      toast.success("Employee Successfully added");
       formRef.current?.reset();
     } catch (err) {
-      console.log(error?.message);
+      const e = error?.message ? JSON.parse(error.message) : null;
+
+      toast.error(`${e[0].message ?? "An Unkown Error Occured"} `);
     }
   };
 
