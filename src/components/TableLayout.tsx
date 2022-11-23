@@ -1,6 +1,7 @@
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { flexRender, Table } from "@tanstack/react-table";
+import { flexRender } from "@tanstack/react-table";
+import type { Table } from "@tanstack/react-table";
 import clsx from "clsx";
 import { TableFilter } from "./TableFilter";
 

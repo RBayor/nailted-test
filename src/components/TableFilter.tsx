@@ -1,4 +1,4 @@
-import { Column, Table } from "@tanstack/react-table";
+import type { Column, Table } from "@tanstack/react-table";
 import React from "react";
 import { DebouncedInput } from "./DebouncedInput";
 

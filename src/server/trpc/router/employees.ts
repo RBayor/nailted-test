@@ -16,12 +16,12 @@ type Employee = {
 };
 
 const zEmployee = z.object({
-  name: z.string(),
-  surname: z.string(),
-  address: z.string(),
-  phone: z.string(),
-  email: z.string(),
-  birthdate: z.string(),
+  name: z.string().min(1),
+  surname: z.string().min(1),
+  address: z.string().min(1),
+  phone: z.string().min(1),
+  email: z.string().min(1),
+  birthdate: z.string().min(1),
 });
 
 const headers = "id,name,surname,address,phone,email,birthdate\n";

@@ -1,19 +1,35 @@
-import React, { FC, ReactElement } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
+import { trpc } from "../utils/trpc";
+import type { Employee } from "./TableColums";
 import TextInput from "./TextInput";
 
 type Props = {
-  handleModalClose: (arg: any) => void;
+  handleModalClose: () => void;
   isOpen: boolean;
 };
-// const csv = `\n${nextIndex},${name},${surname},"${address}",${phone},${email},${birthdate}`;
+
 export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const utils = trpc.useContext();
+  const { mutateAsync, error } = trpc.employees.addEmployee.useMutation({
+    onSettled() {
+      utils.employees.allEmployees.invalidate();
+    },
+  });
+
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const formData = new FormData(event.target as HTMLFormElement);
-    const employeeData = Object.fromEntries(formData);
-    console.log(employeeData);
+    const employeeData = Object.fromEntries(formData) as Employee;
+
+    try {
+      await mutateAsync(employeeData);
+
+      formRef.current?.reset();
+    } catch (err) {
+      console.log(error?.message);
+    }
   };
 
   return typeof window !== "undefined" ? (
@@ -24,6 +40,7 @@ export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
             <form
               className="mx-auto mt-10 flex h-min w-1/3 flex-col rounded bg-slate-800 p-10 text-center text-white"
               onSubmit={onSubmit}
+              ref={formRef}
             >
               <div className="flex flex-row items-center justify-between ">
                 <h5 className="text-center text-xl font-medium">
@@ -38,12 +55,7 @@ export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
               </div>
 
               <div className="mt-5 space-y-10">
-                <TextInput
-                  label="Name"
-                  name="name"
-                  id="name"
-                  placeholder="name"
-                />
+                <TextInput label="Name" name="name" id="name" />
                 <TextInput label="Surname" name="surname" id="surname" />
                 <TextInput label="Address" name="address" id="address" />
                 <TextInput label="Phone" name="phone" id="phone" />
@@ -65,6 +77,7 @@ export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
           </div>
         )}
       </>,
+      //eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
       document.getElementById("modal-portal")!
     )
   ) : (

@@ -3,14 +3,14 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  PaginationState,
-  SortingState,
+  type PaginationState,
+  type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import { trpc } from "../utils/trpc";
-import { Employee, employeeTableColumns } from "./TableColums";
+import { type Employee, employeeTableColumns } from "./TableColums";
 import { TableTemplate } from "./TableLayout";
 
 export const EmployeeTable: FC = () => {
