@@ -14,7 +14,8 @@ import { Employee, employeeTableColumns } from "./TableColums";
 import { TableTemplate } from "./TableLayout";
 
 export const EmployeeTable: FC = () => {
-  const fetchEmployees = trpc.fetchEmployees.allEmployees.useQuery();
+  const fetchEmployees = trpc.employees.allEmployees.useQuery();
+
   const employees = fetchEmployees.data?.employees.data;
 
   const [sorting, setSorting] = useState<SortingState>([]);

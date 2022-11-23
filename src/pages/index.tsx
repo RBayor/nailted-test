@@ -1,8 +1,15 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { EmployeeTable } from "../components/EmployeesTable";
+import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
+  const utils = trpc.useContext();
+  const { mutate } = trpc.employees.addEmployee.useMutation({
+    onSettled() {
+      utils.employees.allEmployees.invalidate();
+    },
+  });
   return (
     <>
       <Head>
@@ -12,6 +19,21 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-slate-900">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+          <button
+            className="btn text-white"
+            onClick={() =>
+              mutate({
+                name: "Roland",
+                surname: "Bayor",
+                address: "12 bungalow",
+                birthdate: "12/01/1998",
+                email: "rb@gmail/com",
+                phone: "0540935429",
+              })
+            }
+          >
+            Add Entry
+          </button>
           <EmployeeTable />
         </div>
       </main>
