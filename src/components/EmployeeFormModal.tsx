@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { toast } from "react-toastify";
+import { z, ZodError } from "zod";
 import { trpc } from "../utils/trpc";
 import type { Employee } from "./TableColums";
 import TextInput from "./TextInput";
@@ -9,6 +10,15 @@ type Props = {
   handleModalClose: () => void;
   isOpen: boolean;
 };
+
+const zEmployee = z.object({
+  name: z.string().min(1),
+  surname: z.string().min(1),
+  address: z.string().min(1),
+  phone: z.string().min(1),
+  email: z.string().email(),
+  birthdate: z.string().min(1),
+});
 
 export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
   const formRef = React.useRef<HTMLFormElement>(null);
@@ -25,13 +35,22 @@ export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
     const employeeData = Object.fromEntries(formData) as Employee;
 
     try {
-      await mutateAsync(employeeData);
+      const validEmployee = zEmployee.parse(employeeData);
+
+      await mutateAsync(validEmployee);
       toast.success("Employee Successfully added");
       formRef.current?.reset();
     } catch (err) {
-      const e = error?.message ? JSON.parse(error.message) : null;
-
-      toast.error(`${e[0].message ?? "An Unkown Error Occured"} `);
+      if (error) {
+        const e = error?.message ? JSON.parse(error.message) : null;
+        toast.error(`${e[0].message ?? "An Unkown Error Occured"} `);
+        return;
+      }
+      if (err instanceof ZodError) {
+        const e = JSON.parse(err.message);
+        toast.error(e[0].message);
+        return;
+      }
     }
   };
 
@@ -58,11 +77,36 @@ export const EmployeeFormModal = ({ handleModalClose, isOpen }: Props) => {
               </div>
 
               <div className="mt-5 space-y-10">
-                <TextInput label="Name" name="name" id="name" />
-                <TextInput label="Surname" name="surname" id="surname" />
-                <TextInput label="Address" name="address" id="address" />
-                <TextInput label="Phone" name="phone" id="phone" />
-                <TextInput label="Email" name="email" id="email" />
+                <TextInput
+                  label="Name"
+                  name="name"
+                  id="name"
+                  placeholder="name"
+                />
+                <TextInput
+                  label="Surname"
+                  name="surname"
+                  id="surname"
+                  placeholder="surname"
+                />
+                <TextInput
+                  label="Address"
+                  name="address"
+                  id="address"
+                  placeholder="address"
+                />
+                <TextInput
+                  label="Phone"
+                  name="phone"
+                  id="phone"
+                  placeholder="phone number"
+                />
+                <TextInput
+                  label="Email"
+                  name="email"
+                  id="email"
+                  placeholder="email"
+                />
                 <TextInput
                   type="date"
                   label="Birth Date"
